@@ -6,3 +6,4 @@ dist/
 .claude/
 .impeccable/ref/
 .impeccable/review/
+*-debug.log
