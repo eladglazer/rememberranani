@@ -20,6 +20,6 @@
     "@astrojs/check": "^0.9.12",
     "@firebase/rules-unit-testing": "^6.0.0",
     "firebase-tools": "^15.34.2",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
