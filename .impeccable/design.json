@@ -1,0 +1,447 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-31T18:33:47.625Z",
+  "title": "Design System: Remember Ranani",
+  "extensions": {
+    "colorMeta": {
+      "candle-amber": {
+        "role": "primary",
+        "displayName": "Candle Amber",
+        "canonical": "#E3B062",
+        "oklch": "oklch(78.8% 0.113 76.5)",
+        "cssVar": "--amber",
+        "tonalRamp": [
+          "#170700",
+          "#3C1A00",
+          "#603400",
+          "#815300",
+          "#A67622",
+          "#C99C58",
+          "#E0C6A1",
+          "#F6EDE1"
+        ]
+      },
+      "ochre-ink": {
+        "role": "primary",
+        "displayName": "Ochre Ink",
+        "canonical": "#7A4E0E",
+        "oklch": "oklch(46.3% 0.094 69.8)",
+        "cssVar": "--amber-ink",
+        "tonalRamp": [
+          "#170700",
+          "#3B1B00",
+          "#5E3400",
+          "#7F5315",
+          "#A4763D",
+          "#C79B69",
+          "#E0C6A9",
+          "#F5EDE4"
+        ]
+      },
+      "dusk-plate": {
+        "role": "secondary",
+        "displayName": "Dusk Chart-Blue",
+        "canonical": "#22314F",
+        "oklch": "oklch(31.5% 0.058 263.3)",
+        "cssVar": "--sky",
+        "tonalRamp": [
+          "#060B17",
+          "#18233B",
+          "#303F5E",
+          "#4D5E7F",
+          "#6E80A3",
+          "#94A5C6",
+          "#C1CBDE",
+          "#EBEFF5"
+        ]
+      },
+      "dusk-plate-deep": {
+        "role": "secondary",
+        "displayName": "Deep Dusk",
+        "canonical": "#1B2842",
+        "oklch": "oklch(27.9% 0.052 263.2)",
+        "cssVar": "--sky-2",
+        "tonalRamp": [
+          "#060B16",
+          "#192439",
+          "#31405B",
+          "#4E5E7B",
+          "#7081A0",
+          "#96A5C2",
+          "#C2CBDC",
+          "#ECEFF4"
+        ]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Chalk",
+        "canonical": "#F3F1EA",
+        "oklch": "oklch(95.8% 0.010 93.6)",
+        "cssVar": "--chalk",
+        "tonalRamp": [
+          "#0C0B09",
+          "#252420",
+          "#41403A",
+          "#5F5E58",
+          "#82807A",
+          "#A6A59F",
+          "#CBCAC7",
+          "#EFEEED"
+        ]
+      },
+      "fog": {
+        "role": "neutral",
+        "displayName": "Fog",
+        "canonical": "#A7B3CC",
+        "oklch": "oklch(76.6% 0.038 265.1)",
+        "cssVar": "--fog",
+        "tonalRamp": [
+          "#080B13",
+          "#1C2434",
+          "#364054",
+          "#535E74",
+          "#758098",
+          "#9AA5BB",
+          "#C4CBD8",
+          "#ECEEF3"
+        ]
+      },
+      "chalk-paper": {
+        "role": "neutral",
+        "displayName": "Chalk Paper",
+        "canonical": "#F1F3F4",
+        "oklch": "oklch(96.3% 0.003 228.8)",
+        "cssVar": "--paper",
+        "tonalRamp": [
+          "#0B0B0C",
+          "#232425",
+          "#3E4041",
+          "#5C5E5F",
+          "#7F8081",
+          "#A3A5A6",
+          "#CACBCB",
+          "#EEEEEF"
+        ]
+      },
+      "paper-mat": {
+        "role": "neutral",
+        "displayName": "Paper Mat",
+        "canonical": "#E4E8EB",
+        "oklch": "oklch(92.9% 0.006 239.8)",
+        "cssVar": "--paper-2",
+        "tonalRamp": [
+          "#0A0B0C",
+          "#222426",
+          "#3D4043",
+          "#5B5E61",
+          "#7D8183",
+          "#A2A5A8",
+          "#C9CBCC",
+          "#EEEEEF"
+        ]
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "canonical": "#19213A",
+        "oklch": "oklch(25.4% 0.049 269.3)",
+        "cssVar": "--ink",
+        "tonalRamp": [
+          "#070B15",
+          "#1C2338",
+          "#353F5A",
+          "#525D7A",
+          "#747F9E",
+          "#99A4C1",
+          "#C4CADB",
+          "#ECEEF4"
+        ]
+      },
+      "slate-ink": {
+        "role": "neutral",
+        "displayName": "Slate Ink",
+        "canonical": "#4A5470",
+        "oklch": "oklch(44.9% 0.048 269.2)",
+        "cssVar": "--ink-2",
+        "tonalRamp": [
+          "#070B15",
+          "#1C2337",
+          "#353F59",
+          "#525D79",
+          "#747F9E",
+          "#9AA4C0",
+          "#C4CADB",
+          "#ECEEF4"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#C7CAD3",
+        "oklch": "oklch(83.9% 0.013 271.3)",
+        "cssVar": "--rule",
+        "tonalRamp": [
+          "#0A0B0E",
+          "#222429",
+          "#3D3F47",
+          "#5B5D65",
+          "#7D8088",
+          "#A2A4AC",
+          "#C9CACF",
+          "#EEEEF0"
+        ]
+      },
+      "strong-rule": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "#737B90",
+        "oklch": "oklch(58.4% 0.034 268.9)",
+        "cssVar": "--line-strong",
+        "tonalRamp": [
+          "#080B12",
+          "#1E2432",
+          "#383F52",
+          "#565D71",
+          "#788095",
+          "#9DA4B8",
+          "#C6CAD6",
+          "#EDEEF2"
+        ]
+      },
+      "field-white": {
+        "role": "neutral",
+        "displayName": "Field White",
+        "canonical": "#FFFFFF",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
+        ]
+      },
+      "sky-rule": {
+        "role": "neutral",
+        "displayName": "Sky Rule",
+        "canonical": "rgb(243 241 234 / 0.2)",
+        "cssVar": "--sky-rule",
+        "note": "Alpha hairline on sky; chart grid lines use rgb(243 241 234 / 0.12)."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "His given name in the opening plate only; italic, upright in Hebrew."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section and chapter titles, balanced."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Family name, \"We'll dance again.\", quotations, closing line, Book form heading."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Story text at a 65ch measure."
+      },
+      "label": {
+        "displayName": "Coordinate",
+        "purpose": "Dates, captions, counts, attributions, language links, footer. Letter-spacing 0 in Hebrew."
+      },
+      "numeral": {
+        "displayName": "Count Numeral",
+        "purpose": "The candle count, min-width 4ch so it changes in place."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Button labels in the sans."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Star birth and press scale."
+      },
+      {
+        "name": "ease-calm",
+        "value": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+        "purpose": "Color transitions and the image fade-in."
+      },
+      {
+        "name": "image-fade",
+        "value": "opacity 450ms ease-calm; CSS fallback shows the image after 3s",
+        "purpose": "Plates fade in once loaded; no transition under reduced motion."
+      },
+      {
+        "name": "star-born",
+        "value": "1200ms ease-out; scale 0.4 to 1, amber drop-shadow peaking at 6px then clearing",
+        "purpose": "The one authored moment."
+      },
+      {
+        "name": "ring-born",
+        "value": "1400ms ease-out, 200ms delay; scale 2.2 to 1",
+        "purpose": "The amber \"your star\" ring settling."
+      },
+      {
+        "name": "state",
+        "value": "200ms ease-calm (color); 160ms ease-out (scale 0.98, player 0.97)",
+        "purpose": "Button hover and press."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "900px",
+        "purpose": "12-column chapter and opening grid; below it everything stacks."
+      }
+    ],
+    "starRamp": {
+      "chart": "1000x620",
+      "radii": [
+        1.2,
+        1.6,
+        2.1,
+        2.8,
+        3.6
+      ],
+      "weights": [
+        0.38,
+        0.28,
+        0.18,
+        0.11,
+        0.05
+      ],
+      "placement": "mulberry32, deterministic per star index (src/lib/stars.ts)"
+    },
+    "measure": "65ch"
+  },
+  "components": [
+    {
+      "name": "Candle Button",
+      "kind": "button",
+      "refersTo": "button-candle",
+      "description": "The live candle on a sky plate; amber outline, fills on hover, never toggles off once lit.",
+      "html": "<div class=\"ds-sky\"><button class=\"ds-btn-candle\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" aria-hidden=\"true\"><path d=\"M12 3c2.2 2.6 3.4 4.6 3.4 6.5A3.4 3.4 0 0 1 12 13a3.4 3.4 0 0 1-3.4-3.5C8.6 7.6 9.8 5.6 12 3Z\" fill=\"currentColor\"/><rect x=\"9.5\" y=\"14.5\" width=\"5\" height=\"7\" rx=\"1\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/></svg>Light a candle</button></div>",
+      "css": ".ds-sky { background: var(--sky, #22314F); padding: 24px; } .ds-btn-candle { display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 12px 24px; background: transparent; color: var(--amber, #E3B062); border: 1px solid var(--amber, #E3B062); border-radius: 2px; font-family: 'Assistant Variable', system-ui, sans-serif; font-size: 1.0625rem; cursor: pointer; transition: background-color 200ms cubic-bezier(0.25,0.1,0.25,1), color 200ms cubic-bezier(0.25,0.1,0.25,1), transform 160ms cubic-bezier(0.23,1,0.32,1); } .ds-btn-candle:hover { background: var(--amber, #E3B062); color: var(--sky, #22314F); } .ds-btn-candle:focus-visible { outline: 2px solid var(--amber, #E3B062); outline-offset: 3px; } .ds-btn-candle:active { transform: scale(0.98); } .ds-btn-candle:disabled { cursor: default; border-color: rgb(243 241 234 / 0.2); color: var(--fog, #A7B3CC); background: transparent; }"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "The Book of Memories submit on paper.",
+      "html": "<button class=\"ds-btn-ink\">Send</button>",
+      "css": ".ds-btn-ink { min-height: 48px; padding: 12px 32px; background: var(--ink, #19213A); color: var(--paper, #F1F3F4); border: 1px solid var(--ink, #19213A); border-radius: 2px; font-family: 'Assistant Variable', system-ui, sans-serif; font-size: 1.0625rem; cursor: pointer; transition: background-color 200ms cubic-bezier(0.25,0.1,0.25,1), transform 160ms cubic-bezier(0.23,1,0.32,1); } .ds-btn-ink:hover { background: var(--sky, #22314F); } .ds-btn-ink:focus-visible { outline: 2px solid var(--ink, #19213A); outline-offset: 3px; } .ds-btn-ink:active { transform: scale(0.98); } .ds-btn-ink:disabled { opacity: 0.6; cursor: progress; }"
+    },
+    {
+      "name": "Music Player",
+      "kind": "button",
+      "refersTo": "button-player",
+      "description": "Fixed bottom inline-end toggle for the song.",
+      "html": "<button class=\"ds-btn-player\" aria-pressed=\"false\"><svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" aria-hidden=\"true\"><path d=\"M4 2.5v11l9-5.5z\" fill=\"currentColor\"/></svg><span>Music</span></button>",
+      "css": ".ds-btn-player { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px; background: var(--sky, #22314F); color: var(--chalk, #F3F1EA); border: 1px solid rgb(243 241 234 / 0.2); border-radius: 2px; font-family: 'Assistant Variable', system-ui, sans-serif; font-size: 0.8125rem; letter-spacing: 0.06em; cursor: pointer; transition: transform 160ms cubic-bezier(0.23,1,0.32,1); } .ds-btn-player:focus-visible { outline: 2px solid var(--amber, #E3B062); outline-offset: 3px; } .ds-btn-player:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Book of Memories field with a sans label above.",
+      "html": "<label class=\"ds-field\"><span>Your name</span><input class=\"ds-input\" type=\"text\" /></label>",
+      "css": ".ds-field { display: grid; gap: 8px; max-width: 420px; } .ds-field span { font-family: 'Assistant Variable', system-ui, sans-serif; font-size: 0.8125rem; letter-spacing: 0.02em; color: var(--ink-2, #4A5470); } .ds-input { width: 100%; padding: 12px 16px; background: #FFFFFF; color: var(--ink, #19213A); border: 1px solid var(--line-strong, #737B90); border-radius: 2px; font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 1.0625rem; line-height: 1.5; caret-color: var(--amber-ink, #7A4E0E); } .ds-input:focus-visible { outline: 2px solid var(--ink, #19213A); outline-offset: 1px; } .ds-input[aria-invalid='true'] { border-color: var(--amber-ink, #7A4E0E); }"
+    },
+    {
+      "name": "Language Links",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Languages as words in the coordinate voice, on the opening sky plate.",
+      "html": "<nav class=\"ds-langs\"><a href=\"#\" aria-current=\"page\">English</a><a href=\"#\">Português</a><a href=\"#\" lang=\"he\">עברית</a></nav>",
+      "css": ".ds-langs { display: flex; gap: 24px; padding: 16px 24px; background: var(--sky, #22314F); font-family: 'Assistant Variable', system-ui, sans-serif; font-size: 0.8125rem; letter-spacing: 0.06em; } .ds-langs a { color: var(--fog, #A7B3CC); text-decoration: none; padding-block: 8px; text-underline-offset: 0.2em; } .ds-langs a[aria-current='page'] { color: var(--chalk, #F3F1EA); text-decoration: underline; } .ds-langs a:hover { color: var(--chalk, #F3F1EA); } .ds-langs a:focus-visible { outline: 2px solid var(--amber, #E3B062); outline-offset: 3px; }"
+    },
+    {
+      "name": "Paper Plate",
+      "kind": "card",
+      "refersTo": "plate-paper",
+      "description": "A photograph mounted on chalk paper: mat, hairline, two diamond terminals, coordinate caption.",
+      "html": "<figure class=\"ds-plate\"><div class=\"ds-plate-frame\"><div class=\"ds-plate-img\"></div></div><figcaption>Porto Alegre · Grêmio</figcaption></figure>",
+      "css": ".ds-plate { margin: 0; padding: 24px; background: var(--paper, #F1F3F4); max-width: 360px; } .ds-plate-frame { position: relative; background: var(--paper-2, #E4E8EB); padding: 8px; border: 1px solid var(--rule, #C7CAD3); } .ds-plate-frame::before, .ds-plate-frame::after { content: ''; position: absolute; width: 7px; height: 7px; background: var(--paper, #F1F3F4); border: 1px solid var(--line-strong, #737B90); transform: rotate(45deg); } .ds-plate-frame::before { top: -4px; left: -4px; } .ds-plate-frame::after { bottom: -4px; right: -4px; } .ds-plate-img { aspect-ratio: 4 / 3; background: #B9C0C9; } .ds-plate figcaption { margin-top: 12px; color: var(--ink-2, #4A5470); font-family: 'Assistant Variable', system-ui, sans-serif; font-size: 0.8125rem; letter-spacing: 0.06em; }"
+    },
+    {
+      "name": "Sky Plate with Star Chart",
+      "kind": "custom",
+      "refersTo": "plate-sky",
+      "description": "Dusk plate with an inset frame and diamonds; chalk stars on the magnitude ramp; the amber ring marks your star.",
+      "html": "<section class=\"ds-sky-plate\"><div class=\"ds-frame\"></div><div class=\"ds-chart\"><svg viewBox=\"0 0 200 124\"><line x1=\"0\" y1=\"62\" x2=\"200\" y2=\"62\"/><line x1=\"100\" y1=\"0\" x2=\"100\" y2=\"124\"/><circle class=\"s\" cx=\"30\" cy=\"30\" r=\"1.2\"/><circle class=\"s\" cx=\"70\" cy=\"90\" r=\"2.1\"/><circle class=\"s\" cx=\"150\" cy=\"40\" r=\"3.6\"/><circle class=\"s\" cx=\"120\" cy=\"100\" r=\"1.6\"/><circle class=\"s\" cx=\"170\" cy=\"96\" r=\"2.8\"/><circle class=\"ring\" cx=\"70\" cy=\"90\" r=\"6\"/></svg></div></section>",
+      "css": ".ds-sky-plate { position: relative; background: var(--sky, #22314F); padding: 40px; } .ds-frame { position: absolute; inset: 16px; border: 1px solid rgb(243 241 234 / 0.2); pointer-events: none; } .ds-frame::before, .ds-frame::after, .ds-chart::before, .ds-chart::after { content: ''; position: absolute; width: 7px; height: 7px; background: var(--sky, #22314F); border: 1px solid var(--fog, #A7B3CC); transform: rotate(45deg); } .ds-frame::before, .ds-chart::before { top: -4px; left: -4px; } .ds-frame::after, .ds-chart::after { bottom: -4px; right: -4px; } .ds-chart { position: relative; background: var(--sky-2, #1B2842); border: 1px solid rgb(243 241 234 / 0.2); } .ds-chart svg { display: block; width: 100%; height: auto; } .ds-chart line { stroke: rgb(243 241 234 / 0.12); stroke-dasharray: 2 7; } .ds-chart .s { fill: var(--chalk, #F3F1EA); } .ds-chart .ring { fill: none; stroke: var(--amber, #E3B062); stroke-width: 1.5; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Dusk Star Atlas",
+    "overview": "The page is a star atlas of the sky he danced under. Cool chalk paper carries the reading; framed dusk chart-blue plates carry the sky. The sky never floods the page: it appears only as bounded plates (the opening plate and the candle chart), each set in from its edge by a hairline frame with diamond terminals, the way a printed atlas mounts its charts. Nothing is night-black, nothing is heavy. The family asked for a memorial that is not dark, and the system holds that line through a light paper ground and a dusk (not midnight) blue.\n\nTwo voices share the type. A variable serif tells the story and carries his name in a large italic; a clean sans in tabular, lining figures sets everything that behaves like a coordinate: dates, counts, captions, language links, attributions. Stars are chalk-white on a fixed five-step magnitude ramp, placed deterministically so every visitor sees the same sky and a new candle never moves the others. Candle amber is the only warm color, and it belongs to the live candle.\n\nMotion is almost absent. Images fade in once loaded; in-page links scroll smoothly; the star birth is the one authored moment. Nothing reveals on scroll.",
+    "keyCharacteristics": [
+      "Light chalk paper ground with framed dusk-blue sky plates; never night-black.",
+      "Hairline frames with two diamond terminals on opposite corners mark every plate.",
+      "Serif for story, tabular sans for coordinates.",
+      "One warm accent (candle amber) reserved for the live candle object.",
+      "Square plates, 2px corners on controls only.",
+      "One authored motion moment: the star birth.",
+      "Three languages, Hebrew right-to-left and never slanted."
+    ],
+    "rules": [
+      {
+        "name": "The One Live Object Rule",
+        "body": "Candle amber marks the live candle and its consequences (button, \"your star\" ring, legend, candle error) and focus on sky. \"We'll dance again.\", the plate diamonds, headings and links are never amber. If amber appears anywhere a visitor cannot light a candle or is not focused, it is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dusk, Not Night Rule",
+        "body": "The sky is dusk chart-blue, used only as framed plates set into chalk paper. No full-bleed dark sections beyond a plate, no black, no dark mode.",
+        "section": "colors"
+      },
+      {
+        "name": "The Coordinates Rule",
+        "body": "Anything that is a date, a count, a place-caption or a navigation word is set in the sans with tabular lining figures. Story and names are serif.",
+        "section": "typography"
+      },
+      {
+        "name": "The Upright Hebrew Rule",
+        "body": "Hebrew never slants. Every italic role (his name, \"We'll dance again.\", quotations, the closing line, candle and form headings, signer names, the thank-you note) is set `font-style: normal` under `:lang(he)`. Coordinate letter-spacing also drops to 0 in Hebrew.",
+        "section": "typography"
+      },
+      {
+        "name": "The Place, Not Year Rule",
+        "body": "Captions state place and topic (\"Porto Alegre · Grêmio\", \"At the drums\"), never invented years or ages.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mounted, Not Lifted Rule",
+        "body": "Things are framed, never floated. Separate surfaces with a hairline and a mat, not a shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do mount every plate (photo, portrait, chart) in a 1px hairline frame with an 8px mat and two diamond terminals on opposite corners.",
+      "Do keep the sky to framed dusk-blue (#22314F) plates set into chalk paper (#F1F3F4).",
+      "Do set dates, counts, captions and navigation in the Assistant sans with tabular lining figures.",
+      "Do reset every italic role to `font-style: normal` under `:lang(he)`, and use logical properties (`inset-inline-*`, `padding-inline-*`) so Hebrew mirrors.",
+      "Do keep the star birth the only authored animation, and gate it behind `prefers-reduced-motion: no-preference`.",
+      "Do write captions as place and topic.",
+      "Do keep touch targets at 44–48px minimum."
+    ],
+    "donts": [
+      "Don't use candle amber for anything other than the live candle object and focus on sky: not for \"We'll dance again.\", not for diamonds, headings or links.",
+      "Don't use black, night-black sections or a dark full-page ground.",
+      "Don't add box shadows; mount surfaces with hairlines and mats instead.",
+      "Don't add scroll reveals or entrance animations beyond the image fade-in.",
+      "Don't let Hebrew slant, and don't letter-space Hebrew coordinates.",
+      "Don't invent years or ages in captions.",
+      "Don't use flags for languages.",
+      "Don't enlarge a photo past its natural size."
+    ]
+  }
+}

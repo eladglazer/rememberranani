@@ -1,0 +1,85 @@
+{
+  "subtitle": "“Vamos dançar de novo.”",
+  "candleTitle": "Acenda uma vela para Ranani",
+  "story": {
+    "introTitle": "A História de Ranani",
+    "introText": "Ranani Niedzielski Glazer nasceu em Porto Alegre, Brasil, em outubro de 1999, filho de Tatiana e David Ronen. Era o amado irmão de Reuven e Elad, Aharon, Avishai, Aryeh e Baruch.",
+    "gremioTitle": "Infância",
+    "gremioText": "Crescendo em Porto Alegre, Ranani amava seu time local “Grêmio”. Mas acima de tudo, amava seus pais e sua família em Israel — tanto que, aos dezesseis anos, após muito esforço, fez Aliá sozinho para se juntar a eles.",
+    "armyTitle": "Serviço militar",
+    "armyText": "Aos vinte anos, alistou-se nas FDI como Soldado Solitário, servindo primeiro na Companhia Carmel em Mahave Alon e depois na elite Brigada Golani. Seus comandantes o lembram como “um soldado incrível, engraçado, determinado a dar tudo pelo Estado de Israel que tanto amava.”",
+    "musicTitle": "Talentos",
+    "musicText": "Seus amigos dizem que Ranani era incrivelmente talentoso e sempre disposto a ajudar. Era conhecido por seu sorriso enorme, sua arte, música, dança — e por sonhar em ser DJ. Ele iluminava qualquer lugar com sua presença.",
+    "novaTitle": "7 de Outubro",
+    "novaText": "Naquele terrível sábado, 7 de outubro de 2023, Ranani estava no Festival Nova perto do Kibutz Re’im, celebrando a vida e a música sob as estrelas. Quando o ataque começou ao amanhecer, ele e seus amigos tentaram escapar — mas foram pegos em um abrigo. Ele foi assassinado ali, junto com tantos outros cujo único “crime” foi dançar livremente.",
+    "goodbyeText": "Após dois dias agonizantes, sua família recebeu a devastadora notícia. Ele foi sepultado no cemitério Tel Regev, apenas dois dias antes de seu 24º aniversário — cercado por entes queridos.",
+    "fatherQuote": "“Meu Nani, você veio para este país com sua própria força... Perdemos um filho, mas o Povo de Israel ganhou uma alma pura e sagrada.” — Seu pai",
+    "brotherQuote": "“Agora você está lá, acima da pista de dança celestial, dançando entre os anjos...” — Seu irmão Reuven",
+    "finalLine": "Que sua memória seja uma bênção — para sempre dançando sob as estrelas."
+  },
+  "ui": {
+    "pageTitle": "Lembrando Ranani",
+    "description": "Em memória de Ranani Niedzielski Glazer (1999–2023).",
+    "skip": "Pular para a história",
+    "given": "Ranani",
+    "family": "Niedzielski Glazer",
+    "dates": "Outubro de 1999 – 7 de outubro de 2023",
+    "portraitAlt": "Ranani num terraço ao sol",
+    "captions": {
+      "intro": "Porto Alegre, Brasil",
+      "gremio": "Porto Alegre · Grêmio",
+      "army": "Soldado Solitário · Brigada Golani",
+      "music": "Na bateria",
+      "nova": "O memorial no local do Festival Nova, Re’im",
+      "goodbye": "Tel Regev"
+    },
+    "alts": {
+      "intro": "Ranani bebê entre bichos de pelúcia",
+      "gremio": "Ranani menino com a camisa do Grêmio",
+      "army": "Ranani de uniforme, sorrindo",
+      "music": "Ranani adolescente tocando bateria",
+      "nova": "Retratos em postes no memorial do Festival Nova, um homem ajoelhado ao lado de um deles",
+      "goodbye": "A lápide de Ranani com flores e um violão ao lado"
+    },
+    "remembrance": "Dias de lembrança",
+    "rows": [
+      [
+        "Yahrzeit (calendário hebraico)",
+        "22 de Tishrei"
+      ],
+      [
+        "Calendário civil",
+        "7 de outubro"
+      ],
+      [
+        "Nascimento",
+        "Outubro de 1999, Porto Alegre"
+      ]
+    ],
+    "skyBody": "Cada vela acesa se torna uma estrela no seu céu.",
+    "skyLabel": "Um mapa de estrelas, uma para cada vela acesa por Ranani",
+    "candlesLit": "velas acesas",
+    "light": "Acender uma vela",
+    "lit": "Sua vela está acesa",
+    "yourStar": "Sua estrela",
+    "candleError": "Não foi possível acender a vela. Tente novamente.",
+    "book": "Livro de Memórias",
+    "bookIntro": "Palavras de familiares e amigos. Novas mensagens aparecem depois que a família as lê.",
+    "loading": "Carregando mensagens…",
+    "empty": "Ainda não há mensagens.",
+    "loadError": "Não foi possível carregar as mensagens agora.",
+    "formTitle": "Deixe uma memória",
+    "name": "Seu nome",
+    "relation": "Como você o conheceu (opcional)",
+    "message": "Sua mensagem",
+    "send": "Enviar para a família",
+    "sending": "Enviando…",
+    "thanks": "Obrigado pela sua mensagem. Ela aparecerá depois que a família a ler.",
+    "sendError": "Não foi possível enviar sua mensagem. Tente novamente.",
+    "music": "Música",
+    "play": "Tocar música",
+    "pause": "Pausar música",
+    "nameRequired": "Por favor, informe seu nome.",
+    "messageRequired": "Por favor, escreva uma mensagem."
+  }
+}

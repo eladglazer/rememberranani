@@ -1,0 +1,214 @@
+---
+interface Props {
+  ui: {
+    book: string; bookIntro: string; loading: string; empty: string; loadError: string;
+    formTitle: string; name: string; relation: string; message: string;
+    send: string; sending: string; thanks: string; sendError: string;
+    nameRequired: string; messageRequired: string;
+  };
+}
+const { ui } = Astro.props;
+---
+<section class="book" id="memories" aria-labelledby="book-title" data-strings={JSON.stringify({ empty: ui.empty, loadError: ui.loadError })}>
+  <div class="inner">
+    <h2 id="book-title">{ui.book}</h2>
+    <p class="intro">{ui.bookIntro}</p>
+
+    <ol class="entries" data-entries aria-busy="true"></ol>
+    <p class="status coord" data-status>{ui.loading}</p>
+
+    <form class="write" data-form novalidate>
+      <h3>{ui.formTitle}</h3>
+      <div class="field">
+        <label for="m-name">{ui.name}</label>
+        <input id="m-name" name="name" required maxlength="80" autocomplete="name" aria-describedby="m-name-error" />
+        <p class="field-error coord" id="m-name-error" hidden>{ui.nameRequired}</p>
+      </div>
+      <div class="field">
+        <label for="m-relation">{ui.relation}</label>
+        <input id="m-relation" name="relation" maxlength="80" />
+      </div>
+      <div class="field">
+        <label for="m-message">{ui.message}</label>
+        <textarea id="m-message" name="message" required maxlength="2000" rows="6" aria-describedby="m-message-error"></textarea>
+        <p class="field-error coord" id="m-message-error" hidden>{ui.messageRequired}</p>
+      </div>
+      <div class="trap" aria-hidden="true">
+        <label for="m-website">Website</label>
+        <input id="m-website" name="website" tabindex="-1" autocomplete="off" />
+      </div>
+      <button type="submit" data-send data-sending={ui.sending}>{ui.send}</button>
+      <p class="error coord" data-send-error role="alert" hidden>{ui.sendError}</p>
+    </form>
+    <p class="thanks" data-thanks role="status" tabindex="-1" hidden>{ui.thanks}</p>
+  </div>
+</section>
+
+<script>
+  import { addDoc, collection, getDocs, query, serverTimestamp, where } from 'firebase/firestore/lite';
+  import { db } from '../lib/firebase';
+
+  const root = document.getElementById('memories')!;
+  const list = root.querySelector<HTMLOListElement>('[data-entries]')!;
+  const status = root.querySelector<HTMLElement>('[data-status]')!;
+  const form = root.querySelector<HTMLFormElement>('[data-form]')!;
+  const send = root.querySelector<HTMLButtonElement>('[data-send]')!;
+  const sendError = root.querySelector<HTMLElement>('[data-send-error]')!;
+  const thanks = root.querySelector<HTMLElement>('[data-thanks]')!;
+  const lang = document.documentElement.lang;
+  const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long', day: 'numeric' });
+  const strings = {
+    empty: '', loadError: '',
+    ...JSON.parse(root.dataset.strings ?? '{}'),
+  };
+
+  interface Entry { name?: string; relation?: string; message?: string; timestamp?: { toDate(): Date } }
+
+  function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text: string) {
+    const node = document.createElement(tag);
+    node.className = cls;
+    node.textContent = text; // visitor text is never parsed as HTML
+    return node;
+  }
+
+  getDocs(query(collection(db, 'depoiments'), where('status', '==', 'approved')))
+    .then((snap) => {
+      const entries = snap.docs
+        .map((d) => d.data() as Entry)
+        .sort((a, b) => (b.timestamp?.toDate().getTime() ?? 0) - (a.timestamp?.toDate().getTime() ?? 0));
+      for (const e of entries) {
+        const li = document.createElement('li');
+        li.append(el('p', 'message', e.message ?? ''));
+        const by = document.createElement('p');
+        by.className = 'by';
+        by.append(el('span', 'name italic', e.name ?? ''));
+        if (e.relation) by.append(el('span', 'relation coord', e.relation));
+        const date = e.timestamp?.toDate();
+        if (date) by.append(el('time', 'date coord', dateFmt.format(date)));
+        li.append(by);
+        list.append(li);
+      }
+      status.textContent = entries.length ? '' : strings.empty;
+      status.hidden = entries.length > 0;
+    })
+    .catch(() => { status.textContent = strings.loadError; })
+    .finally(() => list.setAttribute('aria-busy', 'false'));
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    sendError.hidden = true;
+    // Our own messages, in the page's language, instead of the browser's bubbles
+    let firstInvalid: HTMLInputElement | HTMLTextAreaElement | null = null;
+    for (const field of form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')) {
+      const missing = !field.value.trim();
+      field.setAttribute('aria-invalid', String(missing));
+      document.getElementById(field.getAttribute('aria-describedby')!)!.hidden = !missing;
+      if (missing && !firstInvalid) firstInvalid = field;
+    }
+    if (firstInvalid) return firstInvalid.focus();
+    const data = new FormData(form);
+    const done = () => {
+      form.hidden = true;
+      thanks.hidden = false;
+      thanks.focus();
+    };
+    // Bots fill the hidden field; let them think it worked
+    if (String(data.get('website') ?? '')) return done();
+    const label = send.textContent;
+    send.disabled = true;
+    send.textContent = send.dataset.sending!;
+    try {
+      await addDoc(collection(db, 'depoiments'), {
+        name: String(data.get('name')).trim().slice(0, 80),
+        relation: String(data.get('relation') ?? '').trim().slice(0, 80),
+        message: String(data.get('message')).trim().slice(0, 2000),
+        lang,
+        status: 'pending',
+        timestamp: serverTimestamp(),
+      });
+      done();
+    } catch {
+      sendError.hidden = false;
+      send.disabled = false;
+      send.textContent = label;
+    }
+  });
+</script>
+
+<style>
+  .book { padding-block: var(--s-10) var(--s-9); }
+  .inner { max-width: 760px; margin-inline: auto; padding-inline: var(--gutter); }
+  h2 {
+    font-size: var(--step-2);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: var(--s-3);
+  }
+  .intro { color: var(--ink-2); max-width: var(--measure); }
+
+  .entries { list-style: none; padding: 0; margin-top: var(--s-7); border-top: 1px solid var(--rule); }
+  .entries :global(li) { padding-block: var(--s-6); border-bottom: 1px solid var(--rule); }
+  .entries :global(.message) { white-space: pre-line; overflow-wrap: anywhere; }
+  .entries :global(.by) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-1) var(--s-4);
+    margin-top: var(--s-3);
+  }
+  .entries :global(.name) { font-style: italic; overflow-wrap: anywhere; }
+  :lang(he) .entries :global(.name) { font-style: normal; }
+  .entries :global(.relation), .entries :global(.date) { color: var(--ink-2); }
+  .status { margin-top: var(--s-5); color: var(--ink-2); }
+  .status[hidden] { display: none; }
+
+  .write { margin-top: var(--s-9); display: grid; gap: var(--s-5); }
+  .write[hidden] { display: none; }
+  h3 { font-size: var(--step-1); font-weight: 400; font-style: italic; }
+  :lang(he) h3 { font-style: normal; }
+  .field { display: grid; gap: var(--s-2); }
+  label { font-family: var(--sans); font-size: var(--step--1); color: var(--ink-2); letter-spacing: 0.02em; }
+  input, textarea {
+    width: 100%;
+    padding: var(--s-3) var(--s-4);
+    background: #FFFFFF;
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+    line-height: 1.5;
+    caret-color: var(--amber-ink);
+  }
+  textarea { resize: vertical; min-height: 9rem; }
+  input:focus-visible, textarea:focus-visible { outline-offset: 1px; }
+  .trap { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  button {
+    justify-self: start;
+    min-height: 48px;
+    padding: var(--s-3) var(--s-6);
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    font-family: var(--sans);
+    cursor: pointer;
+    transition: background-color 200ms var(--ease-calm), transform 160ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    button:not(:disabled):hover { background: var(--sky); }
+  }
+  button:not(:disabled):active { transform: scale(0.98); }
+  button:disabled { opacity: 0.6; cursor: progress; }
+  .error, .field-error { color: var(--amber-ink); }
+  .error[hidden], .field-error[hidden] { display: none; }
+  [aria-invalid='true'] { border-color: var(--amber-ink); }
+
+  .thanks {
+    margin-top: var(--s-9);
+    padding: var(--s-6);
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+    font-style: italic;
+  }
+  :lang(he) .thanks { font-style: normal; }
+  .thanks[hidden] { display: none; }
+</style>

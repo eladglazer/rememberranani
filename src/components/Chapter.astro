@@ -1,0 +1,96 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  id: string;
+  title?: string;
+  photo: ImageMetadata;
+  alt: string;
+  caption: string;
+  side: 'start' | 'end';
+}
+const { id, title, photo, alt, caption, side } = Astro.props;
+const portrait = photo.height > photo.width;
+---
+<section class:list={['chapter', `side-${side}`, { portrait }]} aria-labelledby={title ? `${id}-title` : undefined}>
+  <figure class="plate" style={`--natural: ${photo.width + 18}px`}>
+    <div class="plate-frame">
+      <Picture
+        src={photo}
+        alt={alt}
+        widths={[480, 800, 1200].filter((w) => w <= photo.width)}
+        sizes={portrait ? '(min-width: 900px) 420px, 100vw' : '(min-width: 900px) 720px, 100vw'}
+        formats={['avif', 'webp']}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <figcaption class="coord">{caption}</figcaption>
+  </figure>
+  <div class="text">
+    {title && <h2 id={`${id}-title`}>{title}</h2>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .chapter {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--s-5);
+    row-gap: var(--s-6);
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .chapter + :global(.chapter) { margin-top: var(--s-10); }
+
+  /* Never enlarge a small photo past its real size */
+  .plate { grid-column: 1 / -1; width: 100%; max-width: var(--natural); }
+  .side-end .plate { justify-self: end; }
+  .plate-frame {
+    position: relative;
+    background: var(--paper-2);
+    padding: var(--s-2);
+    border: 1px solid var(--rule);
+  }
+  .plate-frame::before, .plate-frame::after {
+    content: '';
+    position: absolute;
+    width: 7px; height: 7px;
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    transform: rotate(45deg);
+  }
+  .plate-frame::before { top: -4px; inset-inline-start: -4px; }
+  .plate-frame::after { bottom: -4px; inset-inline-end: -4px; }
+  .plate :global(img) { width: 100%; height: auto; }
+  figcaption {
+    margin-top: var(--s-3);
+    color: var(--ink-2);
+  }
+
+  .text { grid-column: 1 / -1; max-width: var(--measure); }
+  h2 {
+    font-size: var(--step-2);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--s-4);
+    text-wrap: balance;
+  }
+  .text :global(p + p) { margin-top: var(--s-4); }
+
+  @media (min-width: 900px) {
+    .side-start .plate { grid-column: 1 / span 8; }
+    .side-end .plate { grid-column: 5 / span 8; }
+    .portrait.side-start .plate { grid-column: 1 / span 5; }
+    .portrait.side-end .plate { grid-column: 8 / span 5; }
+    .side-start .text { grid-column: 3 / span 8; }
+    .side-end .text { grid-column: 3 / span 8; }
+    /* A portrait plate leaves room beside it: the text sits alongside, still read after the photo */
+    .portrait.side-start .text { grid-column: 7 / span 6; align-self: end; }
+    .portrait.side-end .text { grid-column: 1 / span 6; grid-row: 1; align-self: end; }
+  }
+</style>

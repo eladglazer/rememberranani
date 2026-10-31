@@ -1,0 +1,51 @@
+---
+interface Props { ui: { music: string; play: string; pause: string } }
+const { ui } = Astro.props;
+---
+<div class="player">
+  <audio src="/music/noiact.mp3" preload="none" loop data-audio></audio>
+  <button type="button" aria-pressed="false" aria-label={ui.play} data-play={ui.play} data-pause={ui.pause} data-toggle>
+    <svg class="i-play" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor" /></svg>
+    <svg class="i-pause" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor" /></svg>
+    <span class="coord">{ui.music}</span>
+  </button>
+</div>
+
+<script>
+  const audio = document.querySelector<HTMLAudioElement>('[data-audio]')!;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-toggle]')!;
+  const sync = () => {
+    const playing = !audio.paused;
+    toggle.setAttribute('aria-pressed', String(playing));
+    toggle.setAttribute('aria-label', (playing ? toggle.dataset.pause : toggle.dataset.play)!);
+  };
+  toggle.addEventListener('click', () => (audio.paused ? audio.play() : audio.pause()));
+  audio.addEventListener('play', sync);
+  audio.addEventListener('pause', sync);
+</script>
+
+<style>
+  .player {
+    position: fixed;
+    inset-inline-end: var(--s-4);
+    bottom: var(--s-4);
+    z-index: 5;
+  }
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 44px;
+    padding: var(--s-2) var(--s-4);
+    background: var(--sky);
+    color: var(--chalk);
+    border: 1px solid var(--sky-rule);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 160ms var(--ease-out);
+  }
+  button:active { transform: scale(0.97); }
+  button:focus-visible { outline-color: var(--amber); }
+  .i-pause, [aria-pressed='true'] .i-play { display: none; }
+  [aria-pressed='true'] .i-pause { display: block; }
+</style>

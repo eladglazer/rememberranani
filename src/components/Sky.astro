@@ -1,0 +1,254 @@
+---
+import { SKY_W, SKY_H } from '../lib/stars';
+
+interface Props {
+  title: string;
+  body: string;
+  ui: { skyLabel: string; candlesLit: string; light: string; lit: string; yourStar: string; candleError: string };
+}
+const { title, body, ui } = Astro.props;
+---
+<section class="sky candles" id="candle" aria-labelledby="candle-title">
+  <div class="frame" aria-hidden="true"></div>
+  <div class="inner">
+    <div class="head">
+      <h2 id="candle-title">{title}</h2>
+      <p>{body}</p>
+    </div>
+
+    <figure class="chart">
+      <svg
+        viewBox={`0 0 ${SKY_W} ${SKY_H}`}
+        role="img"
+        aria-label={ui.skyLabel}
+        data-sky
+      >
+        <g class="grid" aria-hidden="true">
+          {[1, 2, 3].map((i) => <line x1="0" x2={SKY_W} y1={(SKY_H / 4) * i} y2={(SKY_H / 4) * i} />)}
+          {[1, 2, 3, 4, 5].map((i) => <line y1="0" y2={SKY_H} x1={(SKY_W / 6) * i} x2={(SKY_W / 6) * i} />)}
+        </g>
+        <g class="stars" data-stars></g>
+        <g class="mine" data-mine></g>
+      </svg>
+    </figure>
+
+    <div class="panel">
+      <p class="count">
+        <span class="num" data-count aria-live="polite">—</span>
+        <span class="coord">{ui.candlesLit}</span>
+      </p>
+      <p class="legend coord" data-legend hidden>
+        <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="3" fill="currentColor" /><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" /></svg>
+        {ui.yourStar}
+      </p>
+      <button type="button" class="light" data-light data-lit-label={ui.lit}>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M12 3c2.2 2.6 3.4 4.6 3.4 6.5A3.4 3.4 0 0 1 12 13a3.4 3.4 0 0 1-3.4-3.5C8.6 7.6 9.8 5.6 12 3Z" fill="currentColor" />
+          <rect x="9.5" y="14.5" width="5" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+        <span data-light-label>{ui.light}</span>
+      </button>
+      <p class="error coord" data-error role="alert" hidden>{ui.candleError}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { doc, getDoc, updateDoc, increment } from 'firebase/firestore/lite';
+  import { db, store } from '../lib/firebase';
+  import { star } from '../lib/stars';
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const MAX_DRAWN = 4000;
+  const root = document.getElementById('candle')!;
+  const starsG = root.querySelector<SVGGElement>('[data-stars]')!;
+  const mineG = root.querySelector<SVGGElement>('[data-mine]')!;
+  const countEl = root.querySelector<HTMLElement>('[data-count]')!;
+  const button = root.querySelector<HTMLButtonElement>('[data-light]')!;
+  const label = root.querySelector<HTMLElement>('[data-light-label]')!;
+  const legend = root.querySelector<HTMLElement>('[data-legend]')!;
+  const error = root.querySelector<HTMLElement>('[data-error]')!;
+  const counter = doc(db, 'candles', 'counter');
+  const fmt = new Intl.NumberFormat(document.documentElement.lang);
+  let drawn = 0;
+
+  function draw(upTo: number) {
+    const frag = document.createDocumentFragment();
+    for (; drawn < Math.min(upTo, MAX_DRAWN); drawn++) {
+      const s = star(drawn);
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', s.x.toFixed(1));
+      c.setAttribute('cy', s.y.toFixed(1));
+      c.setAttribute('r', String(s.r));
+      frag.appendChild(c);
+    }
+    starsG.appendChild(frag);
+  }
+
+  function markMine(index: number, born: boolean) {
+    if (index >= MAX_DRAWN) return;
+    const s = star(index);
+    mineG.replaceChildren();
+    const ring = document.createElementNS(NS, 'circle');
+    ring.setAttribute('cx', s.x.toFixed(1));
+    ring.setAttribute('cy', s.y.toFixed(1));
+    ring.setAttribute('r', '14');
+    ring.setAttribute('class', born ? 'ring born' : 'ring');
+    mineG.appendChild(ring);
+    if (born) starsG.lastElementChild?.classList.add('born');
+    legend.hidden = false;
+  }
+
+  function setLit() {
+    button.disabled = true;
+    label.textContent = button.dataset.litLabel!;
+  }
+
+  // Older visits stored only that a candle was lit, not which star is theirs
+  const mine = store('candleStar');
+  if (mine !== null || store('candleLit') === 'true') setLit();
+
+  getDoc(counter)
+    .then((snap) => {
+      const n = Number(snap.data()?.count ?? 0);
+      countEl.textContent = fmt.format(n);
+      draw(n);
+      if (mine !== null) markMine(Number(mine), false);
+    })
+    .catch(() => { countEl.textContent = '—'; });
+
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    error.hidden = true;
+    try {
+      await updateDoc(counter, { count: increment(1) });
+      const n = Number((await getDoc(counter)).data()?.count ?? drawn + 1);
+      countEl.textContent = fmt.format(n);
+      draw(n);
+      store('candleLit', 'true');
+      store('candleStar', String(n - 1));
+      markMine(n - 1, true);
+      setLit();
+    } catch {
+      error.hidden = false;
+      button.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .candles { padding-block: var(--s-9); }
+  .inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1120px;
+    margin-inline: auto;
+    /* clear the frame hairline, which sits 16px in */
+    padding-inline: max(var(--gutter), var(--s-6));
+  }
+  .head { max-width: var(--measure); }
+  h2 {
+    font-size: var(--step-2);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.15;
+    margin-bottom: var(--s-3);
+    text-wrap: balance;
+  }
+  :lang(he) h2 { font-style: normal; }
+  .head p { color: var(--fog); }
+
+  .chart {
+    position: relative;
+    margin-top: var(--s-7);
+    border: 1px solid var(--sky-rule);
+    background: var(--sky-2);
+  }
+  .chart::before, .chart::after {
+    content: '';
+    position: absolute;
+    width: 7px; height: 7px;
+    background: var(--sky);
+    border: 1px solid var(--fog);
+    transform: rotate(45deg);
+  }
+  .chart::before { top: -4px; inset-inline-start: -4px; }
+  .chart::after { bottom: -4px; inset-inline-end: -4px; }
+  .chart svg { width: 100%; height: auto; }
+  .grid line {
+    stroke: rgb(243 241 234 / 0.12);
+    stroke-width: 1;
+    stroke-dasharray: 2 7;
+    vector-effect: non-scaling-stroke;
+  }
+  .stars :global(circle) { fill: var(--chalk); }
+  .mine :global(.ring) { fill: none; stroke: var(--amber); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+
+  .panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-4) var(--s-6);
+    margin-top: var(--s-5);
+  }
+  .count { display: flex; align-items: baseline; gap: var(--s-3); }
+  .num {
+    display: inline-block;
+    min-width: 4ch;
+    font-family: var(--sans);
+    font-variant-numeric: tabular-nums lining-nums;
+    font-size: var(--step-2);
+    font-weight: 300;
+    line-height: 1;
+  }
+  .count .coord { color: var(--fog); }
+  .legend { display: inline-flex; align-items: center; gap: var(--s-2); color: var(--amber); }
+  .legend[hidden] { display: none; }
+
+  .light {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    margin-inline-start: auto;
+    min-height: 48px;
+    padding: var(--s-3) var(--s-5);
+    background: transparent;
+    color: var(--amber);
+    border: 1px solid var(--amber);
+    border-radius: 2px;
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    cursor: pointer;
+    transition: background-color 200ms var(--ease-calm), color 200ms var(--ease-calm), transform 160ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .light:not(:disabled):hover { background: var(--amber); color: var(--sky); }
+  }
+  .light:not(:disabled):active { transform: scale(0.98); }
+  .light:disabled { cursor: default; border-color: var(--sky-rule); color: var(--fog); }
+  .error { flex-basis: 100%; color: var(--amber); }
+  .error[hidden] { display: none; }
+
+  /* The one authored moment: a new star glows into its slot */
+  @media (prefers-reduced-motion: no-preference) {
+    .stars :global(circle.born) {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: star-born 1200ms var(--ease-out) both;
+    }
+    .mine :global(.ring.born) {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: ring-born 1400ms var(--ease-out) 200ms both;
+    }
+  }
+  @keyframes star-born {
+    from { opacity: 0; transform: scale(0.4); filter: drop-shadow(0 0 0 var(--amber)); }
+    60% { opacity: 1; filter: drop-shadow(0 0 6px var(--amber)); }
+    to { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+  }
+  @keyframes ring-born {
+    from { opacity: 0; transform: scale(2.2); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
