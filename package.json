@@ -1,0 +1,25 @@
+{
+  "name": "rememberranani",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-ranani \"node --test tests/firestore.rules.test.mjs\""
+  },
+  "dependencies": {
+    "@fontsource-variable/assistant": "^5.3.0",
+    "@fontsource-variable/frank-ruhl-libre": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.1",
+    "astro": "^7.4.4",
+    "firebase": "^13.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "firebase-tools": "^15.34.2",
+    "typescript": "^6.0.3"
+  }
+}

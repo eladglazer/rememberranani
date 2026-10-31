@@ -1,0 +1,85 @@
+{
+  "subtitle": "“We’ll dance again.”",
+  "candleTitle": "Light a Candle for Ranani",
+  "story": {
+    "introTitle": "Ranani’s Story",
+    "introText": "Ranani Niedzielski Glazer was born in Porto Alegre, Brazil, in October 1999 to Tatiana and David Ronen. He was the beloved brother of Reuven and Elad, Aharon, Avishai, Aryeh, and Baruch.",
+    "gremioTitle": "Childhood",
+    "gremioText": "Growing up in Porto Alegre, Ranani loved his local soccer team “Grêmio”. But above all, he loved his Parents and his family in Israel — so much that at just sixteen, after many years of effort, he made Aliyah alone to join them.",
+    "armyTitle": "Military",
+    "armyText": "At twenty, he enlisted in the IDF as a Lone Soldier, serving first in the Carmel Company at Mahave Alon Base, then in the elite Golani Brigade. His commanders remembered him as “an amazing soldier, funny, determined to give everything he could to the State of Israel he loved so much.”",
+    "musicTitle": "Talents",
+    "musicText": "Ranani’s friends say he was incredibly talented and always eager to help others. He was known for his huge smile, his art, his music, his dancing — and for dreaming of becoming a DJ. He filled every room with light and laughter.",
+    "novaTitle": "October 7th",
+    "novaText": "On that terrible Saturday, October 7th, 2023, Ranani was at the Nova Festival near Kibbutz Re’im, celebrating life and music under the stars. When the attack began at dawn, he and his friends tried to escape — but were caught in a shelter. He was murdered there, alongside so many whose only “crime” was dancing freely.",
+    "goodbyeText": "After two agonizing days, his family received the devastating news. He was laid to rest at Tel Regev cemetery, just two days before his 24th birthday — surrounded by loved ones.",
+    "fatherQuote": "“My Nani, you came to this country with your own strength... We lost a son, but the People of Israel gained a pure, holy soul.” — His father",
+    "brotherQuote": "“Now you are there, above the dance floor of heaven, dancing among the angels...” — His brother Reuven",
+    "finalLine": "May his memory be a blessing — forever dancing under the stars."
+  },
+  "ui": {
+    "pageTitle": "Remember Ranani",
+    "description": "In memory of Ranani Niedzielski Glazer (1999–2023).",
+    "skip": "Skip to his story",
+    "given": "Ranani",
+    "family": "Niedzielski Glazer",
+    "dates": "October 1999 – 7 October 2023",
+    "portraitAlt": "Ranani on a sunlit rooftop",
+    "captions": {
+      "intro": "Porto Alegre, Brazil",
+      "gremio": "Porto Alegre · Grêmio",
+      "army": "Lone Soldier · Golani Brigade",
+      "music": "At the drums",
+      "nova": "The memorial at the Nova festival site, Re’im",
+      "goodbye": "Tel Regev"
+    },
+    "alts": {
+      "intro": "Ranani as a baby among stuffed toys",
+      "gremio": "Ranani as a boy in a Grêmio shirt",
+      "army": "Ranani in uniform, smiling",
+      "music": "Ranani as a teenager playing the drums",
+      "nova": "Portraits on poles at the Nova memorial site, a man kneeling beside one",
+      "goodbye": "Ranani’s headstone with flowers, a guitar held beside it"
+    },
+    "remembrance": "Days of remembrance",
+    "rows": [
+      [
+        "Yahrzeit (Hebrew calendar)",
+        "22 Tishrei"
+      ],
+      [
+        "Civil calendar",
+        "7 October"
+      ],
+      [
+        "Born",
+        "October 1999, Porto Alegre"
+      ]
+    ],
+    "skyBody": "Every candle lit becomes a star in his sky.",
+    "skyLabel": "A chart of stars, one for each candle lit for Ranani",
+    "candlesLit": "candles lit",
+    "light": "Light a candle",
+    "lit": "Your candle is lit",
+    "yourStar": "Your star",
+    "candleError": "The candle could not be lit. Please try again.",
+    "book": "Book of Memories",
+    "bookIntro": "Words from family and friends. New messages appear once the family has read them.",
+    "loading": "Loading messages…",
+    "empty": "No messages yet.",
+    "loadError": "Messages could not be loaded right now.",
+    "formTitle": "Leave a memory",
+    "name": "Your name",
+    "relation": "How you knew him (optional)",
+    "message": "Your message",
+    "send": "Send to the family",
+    "sending": "Sending…",
+    "thanks": "Thank you for your message. It will appear after the family has read it.",
+    "sendError": "Your message could not be sent. Please try again.",
+    "music": "Music",
+    "play": "Play music",
+    "pause": "Pause music",
+    "nameRequired": "Please enter your name.",
+    "messageRequired": "Please write a message."
+  }
+}

@@ -1,0 +1,141 @@
+/* Star atlas: dusk chart-blue plates set into chalk paper. */
+:root {
+  --paper: #F1F3F4;
+  --paper-2: #E4E8EB;
+  --ink: #19213A;
+  --ink-2: #4A5470;
+  --rule: #C7CAD3;
+  --line-strong: #737B90;
+  --sky: #22314F;
+  --sky-2: #1B2842;
+  --chalk: #F3F1EA;
+  --fog: #A7B3CC;
+  --sky-rule: rgb(243 241 234 / 0.2);
+  --amber: #E3B062;
+  --amber-ink: #7A4E0E;
+
+  --serif: 'Source Serif 4 Variable', 'Frank Ruhl Libre Variable', Georgia, serif;
+  --sans: 'Assistant Variable', system-ui, sans-serif;
+
+  --step--1: 0.8125rem;
+  --step-0: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --step-1: clamp(1.25rem, 1.1rem + 0.5vw, 1.4375rem);
+  --step-2: clamp(1.875rem, 1.4rem + 1.6vw, 2.625rem);
+  --step-hero: clamp(3.75rem, 2rem + 7.5vw, 6rem);
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --measure: 65ch;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-calm: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-color: var(--line-strong) var(--paper);
+  accent-color: var(--sky);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  line-height: 1.7;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; height: auto; }
+button, input, textarea { font: inherit; color: inherit; }
+
+::selection { background: rgb(34 49 79 / 0.18); color: var(--ink); }
+.sky ::selection { background: rgb(243 241 234 / 0.25); color: var(--chalk); }
+
+a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.sky :focus-visible { outline-color: var(--amber); }
+
+/* Hebrew has no italic tradition; never let the browser slant it */
+:lang(he) .italic, :lang(he) em, :lang(he) blockquote { font-style: normal; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip {
+  position: absolute;
+  inset-inline-start: var(--s-4);
+  top: var(--s-4);
+  z-index: 10;
+  padding: var(--s-2) var(--s-4);
+  background: var(--chalk);
+  color: var(--ink);
+  font-family: var(--sans);
+  transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
+
+/* Coordinates voice: dates, counts, captions */
+.coord {
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: var(--step--1);
+  letter-spacing: 0.06em;
+}
+:lang(he) .coord { letter-spacing: 0; }
+
+/* A sky plate: dusk chart framed by a hairline with diamond terminals */
+.sky {
+  position: relative;
+  background: var(--sky);
+  color: var(--chalk);
+  isolation: isolate;
+}
+.frame {
+  position: absolute;
+  inset: var(--s-4);
+  border: 1px solid var(--sky-rule);
+  pointer-events: none;
+  z-index: 0;
+}
+.frame::before, .frame::after {
+  content: '';
+  position: absolute;
+  width: 7px; height: 7px;
+  background: var(--sky);
+  border: 1px solid var(--fog);
+  transform: rotate(45deg);
+}
+.frame::before { top: -4px; left: -4px; }
+.frame::after { bottom: -4px; right: -4px; }
+
+/* Photo plates fade in once loaded; without JS they simply show */
+.js .plate img { opacity: 0; transition: opacity 450ms var(--ease-calm); }
+.js .plate img.is-loaded { opacity: 1; }
+/* If the script never runs, show the photo anyway */
+.js .plate img:not(.is-loaded) { animation: plate-fallback 0s 3s forwards; }
+@keyframes plate-fallback { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .js .plate img { transition: none; }
+}

@@ -1,0 +1,302 @@
+---
+import { Picture } from 'astro:assets';
+import Base, { type Lang } from '../layouts/Base.astro';
+import Chapter from './Chapter.astro';
+import Sky from './Sky.astro';
+import Book from './Book.astro';
+import Player from './Player.astro';
+import { star } from '../lib/stars';
+import en from '../i18n/en.json';
+import he from '../i18n/he.json';
+import pt from '../i18n/pt.json';
+import portrait from '../assets/photos/portrait.jpg';
+import baby from '../assets/photos/baby.jpg';
+import gremio from '../assets/photos/gremio.jpg';
+import army from '../assets/photos/army.jpg';
+import drums from '../assets/photos/drums.jpg';
+import reim from '../assets/photos/reim.jpg';
+import goodbye from '../assets/photos/goodbye.jpg';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = { en, he, pt }[lang];
+const { story, ui } = t;
+
+const langs: { code: Lang; label: string; href: string }[] = [
+  { code: 'en', label: 'English', href: '/' },
+  { code: 'pt', label: 'Português', href: '/pt/' },
+  { code: 'he', label: 'עברית', href: '/he/' },
+];
+
+// "“quote…” — attribution": split on the last dash so the attribution can be set apart
+const quote = (s: string) => {
+  const i = s.lastIndexOf(' — ');
+  return i < 0 ? { text: s, cite: '' } : { text: s.slice(0, i), cite: s.slice(i + 3) };
+};
+const quotes = [quote(story.fatherQuote), quote(story.brotherQuote)];
+
+// The hero's background chart: faint declination arcs and dim field stars
+const field = Array.from({ length: 90 }, (_, i) => star(i, 7));
+const arcs = [520, 760, 1000, 1240, 1480];
+const year = new Date().getFullYear();
+---
+<Base lang={lang} title={ui.pageTitle} description={ui.description}>
+  <a class="skip" href="#story">{ui.skip}</a>
+
+  <header class="hero sky">
+    <div class="frame" aria-hidden="true"></div>
+    <svg class="chart-bg" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      {arcs.map((r) => <circle cx="1100" cy="-260" r={r} />)}
+      {field.map((s) => <circle class="dim" cx={s.x.toFixed(1)} cy={s.y.toFixed(1)} r={(s.r * 0.45).toFixed(2)} />)}
+    </svg>
+
+    <nav class="langs coord" aria-label="Language">
+      {langs.map((l) => (
+        <a href={l.href} lang={l.code} hreflang={l.code} data-lang={l.code} aria-current={l.code === lang ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+
+    <div class="hero-grid">
+      <figure class="portrait plate">
+        <Picture
+          src={portrait}
+          alt={ui.portraitAlt}
+          widths={[600, 900, 1388]}
+          sizes="(min-width: 900px) 46vw, 100vw"
+          formats={['avif', 'webp']}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+      <div class="title">
+        <h1>
+          <span class="given italic">{ui.given}</span>
+          <span class="family">{ui.family}</span>
+        </h1>
+        <p class="dates coord">{ui.dates}</p>
+        <p class="line italic">{t.subtitle}</p>
+      </div>
+    </div>
+  </header>
+
+  <main id="story">
+    <div class="chapters">
+      <Chapter id="intro" title={story.introTitle} photo={baby} alt={ui.alts.intro} caption={ui.captions.intro} side="start">
+        <p>{story.introText}</p>
+      </Chapter>
+      <Chapter id="gremio" title={story.gremioTitle} photo={gremio} alt={ui.alts.gremio} caption={ui.captions.gremio} side="end">
+        <p>{story.gremioText}</p>
+      </Chapter>
+      <Chapter id="army" title={story.armyTitle} photo={army} alt={ui.alts.army} caption={ui.captions.army} side="start">
+        <p>{story.armyText}</p>
+      </Chapter>
+      <Chapter id="music" title={story.musicTitle} photo={drums} alt={ui.alts.music} caption={ui.captions.music} side="end">
+        <p>{story.musicText}</p>
+      </Chapter>
+      <Chapter id="nova" title={story.novaTitle} photo={reim} alt={ui.alts.nova} caption={ui.captions.nova} side="start">
+        <p>{story.novaText}</p>
+      </Chapter>
+      <Chapter id="goodbye" photo={goodbye} alt={ui.alts.goodbye} caption={ui.captions.goodbye} side="end">
+        <p>{story.goodbyeText}</p>
+        {quotes.map((q) => (
+          <blockquote>
+            <p>{q.text}</p>
+            {q.cite && <footer class="coord">— {q.cite}</footer>}
+          </blockquote>
+        ))}
+        <p class="final italic">{story.finalLine}</p>
+      </Chapter>
+    </div>
+
+    <section class="remembrance" aria-labelledby="remembrance-title">
+      <h2 id="remembrance-title">{ui.remembrance}</h2>
+      <dl>
+        {ui.rows.map(([label, value]) => (
+          <div class="row">
+            <dt class="coord">{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <Sky title={t.candleTitle} body={ui.skyBody} ui={ui} />
+    <Book ui={ui} />
+  </main>
+
+  <footer class="site-footer">
+    <nav class="coord" aria-label="Language">
+      {langs.map((l) => (
+        <a href={l.href} lang={l.code} hreflang={l.code} data-lang={l.code} aria-current={l.code === lang ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+    <p class="coord">© {year} Remember Ranani</p>
+  </footer>
+
+  <Player ui={ui} />
+</Base>
+
+<script>
+  for (const img of document.querySelectorAll<HTMLImageElement>('.plate img')) {
+    const show = () => img.classList.add('is-loaded');
+    if (img.complete) show();
+    else {
+      img.addEventListener('load', show, { once: true });
+      img.addEventListener('error', show, { once: true });
+    }
+  }
+  for (const a of document.querySelectorAll<HTMLAnchorElement>('[data-lang]')) {
+    a.addEventListener('click', () => {
+      try { localStorage.setItem('lang', a.dataset.lang!); } catch {}
+    });
+  }
+</script>
+
+<style>
+  .hero {
+    min-height: min(100svh, 940px);
+    display: grid;
+    align-items: center;
+    padding: calc(var(--s-9) + var(--s-2)) max(var(--gutter), var(--s-6)) var(--s-9);
+    overflow: hidden;
+  }
+  .chart-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .chart-bg circle { fill: none; stroke: var(--sky-rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .chart-bg .dim { fill: var(--chalk); stroke: none; opacity: 0.5; }
+
+  .langs {
+    position: absolute;
+    top: var(--s-6);
+    inset-inline-end: var(--s-7);
+    z-index: 2;
+    display: flex;
+    gap: var(--s-5);
+  }
+  .langs a, .site-footer nav a {
+    text-decoration: none;
+    color: var(--fog);
+    padding-block: var(--s-2);
+  }
+  .langs a[aria-current='page'] { color: var(--chalk); text-decoration: underline; }
+  @media (hover: hover) and (pointer: fine) {
+    .langs a:hover { color: var(--chalk); }
+  }
+
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    display: grid;
+    gap: var(--s-7);
+  }
+  .portrait {
+    position: relative;
+    border: 1px solid var(--sky-rule);
+    padding: var(--s-2);
+    background: var(--sky-2);
+  }
+  .portrait::before, .portrait::after {
+    content: '';
+    position: absolute;
+    width: 7px; height: 7px;
+    background: var(--sky);
+    border: 1px solid var(--fog);
+    transform: rotate(45deg);
+  }
+  .portrait::before { top: -4px; inset-inline-end: -4px; }
+  .portrait::after { bottom: -4px; inset-inline-start: -4px; }
+  .portrait :global(img) { width: 100%; height: auto; }
+
+  h1 { font-weight: 400; line-height: 0.95; }
+  .given {
+    display: block;
+    font-size: var(--step-hero);
+    font-style: italic;
+    letter-spacing: -0.02em;
+  }
+  .family {
+    display: block;
+    margin-top: var(--s-3);
+    font-size: var(--step-1);
+    letter-spacing: 0.01em;
+    color: var(--chalk);
+  }
+  .dates { margin-top: var(--s-6); color: var(--fog); }
+  .line {
+    margin-top: var(--s-5);
+    font-size: var(--step-1);
+    font-style: italic;
+    color: var(--chalk);
+  }
+  :lang(he) .given, :lang(he) .line, :lang(he) blockquote, :lang(he) .final { font-style: normal; }
+
+  /* Phones: his portrait leads at the top, reaching the frame */
+  @media (max-width: 899px) {
+    .hero { align-items: start; padding-top: calc(var(--s-8) + var(--s-4)); }
+    .portrait { margin-inline: calc(var(--s-4) - max(var(--gutter), var(--s-6))); }
+  }
+
+  @media (min-width: 900px) {
+    .hero-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: center; }
+    .title { grid-column: 1 / span 5; grid-row: 1; }
+    .portrait { grid-column: 7 / span 6; grid-row: 1; }
+  }
+
+  .chapters { padding-block: var(--s-10); }
+
+  blockquote {
+    margin-top: var(--s-6);
+    padding-inline-start: var(--s-5);
+    border-inline-start: 1px solid var(--line-strong);
+    font-size: var(--step-1);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  blockquote footer { margin-top: var(--s-2); font-style: normal; color: var(--ink-2); }
+  .final {
+    margin-top: var(--s-7);
+    font-size: var(--step-1);
+    font-style: italic;
+  }
+
+  .remembrance {
+    max-width: 760px;
+    margin-inline: auto;
+    padding: 0 var(--gutter) var(--s-10);
+  }
+  .remembrance h2 { font-size: var(--step-2); font-weight: 400; line-height: 1.15; margin-bottom: var(--s-6); }
+  .remembrance dl { border-top: 1px solid var(--rule); }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-4);
+    align-items: baseline;
+    padding-block: var(--s-4);
+    border-bottom: 1px solid var(--rule);
+  }
+  .row dt { color: var(--ink-2); }
+  .row dd { font-variant-numeric: lining-nums; }
+
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--s-4);
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: var(--s-6) var(--gutter) calc(var(--s-9) + var(--s-4));
+    border-top: 1px solid var(--rule);
+    color: var(--ink-2);
+  }
+  .site-footer nav { display: flex; gap: var(--s-5); }
+  .site-footer nav a { color: var(--ink-2); }
+  .site-footer nav a[aria-current='page'] { color: var(--ink); text-decoration: underline; }
+</style>

@@ -1,0 +1,31 @@
+rules_version = '2';
+
+// Transition rules while the old Hostinger site is still live.
+// The old site lists every message and sends no status, so reads stay open
+// and a missing status is accepted, but nobody can edit or delete anything.
+// Replace with firestore.rules at the domain switch, then delete this file.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function validMessage(d) {
+      return d.keys().hasOnly(['name', 'relation', 'message', 'lang', 'status', 'timestamp'])
+        && d.name is string && d.name.size() > 0 && d.name.size() <= 80
+        && d.message is string && d.message.size() > 0 && d.message.size() <= 2000
+        && d.get('relation', '') is string && d.get('relation', '').size() <= 80
+        && d.get('lang', 'en') in ['en', 'he', 'pt']
+        && d.timestamp == request.time;
+    }
+
+    match /candles/counter {
+      allow get: if true;
+      allow update: if request.resource.data.keys().hasOnly(['count'])
+        && request.resource.data.count == resource.data.count + 1;
+    }
+
+    match /depoiments/{id} {
+      allow read: if true;
+      allow create: if validMessage(request.resource.data)
+        && request.resource.data.get('status', 'pending') == 'pending';
+    }
+  }
+}
