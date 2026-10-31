@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore/lite';
 
 // Public web config: access is governed by Firestore security rules, not by this key.
 const app = initializeApp({
@@ -12,6 +12,9 @@ const app = initializeApp({
 });
 
 export const db = getFirestore(app);
+
+// Local testing only: PUBLIC_FIRESTORE_EMULATOR=1 npm run dev talks to the emulator, never production
+if (import.meta.env.PUBLIC_FIRESTORE_EMULATOR) connectFirestoreEmulator(db, '127.0.0.1', 8080);
 
 export function store(key: string, value?: string): string | null {
   try {

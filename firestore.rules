@@ -1,0 +1,31 @@
+rules_version = '2';
+
+// Final rules, published when rememberranani.com switches to the new site.
+// Only approved messages are public; new ones wait for the family's review.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function validMessage(d) {
+      return d.keys().hasOnly(['name', 'relation', 'message', 'lang', 'status', 'timestamp'])
+        && d.name is string && d.name.size() > 0 && d.name.size() <= 80
+        && d.message is string && d.message.size() > 0 && d.message.size() <= 2000
+        && d.get('relation', '') is string && d.get('relation', '').size() <= 80
+        && d.get('lang', 'en') in ['en', 'he', 'pt']
+        && d.timestamp == request.time;
+    }
+
+    match /candles/counter {
+      allow get: if true;
+      // Lighting a candle may only ever add one
+      allow update: if request.resource.data.keys().hasOnly(['count'])
+        && request.resource.data.count == resource.data.count + 1;
+    }
+
+    match /depoiments/{id} {
+      allow read: if resource.data.status == 'approved';
+      allow create: if validMessage(request.resource.data)
+        && request.resource.data.status == 'pending';
+      // Approving, editing and deleting happen only in the Firebase console
+    }
+  }
+}
