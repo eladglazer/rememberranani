@@ -518,6 +518,9 @@ body[dir="rtl"] .language-switcher {
     .split-text {
         padding: 2rem;
     }
+    .split-text .text {
+        padding: 0;
+    }
 }
 
 .depoiment-grid-wrapper {

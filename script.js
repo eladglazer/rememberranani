@@ -14,17 +14,6 @@ import {
     orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// Mobile redirect (except on mobile.html)
-// === MOBILE REDIRECT ===
-// Only redirect to mobile.html if on a phone and NOT already on that page
-const isMobileDevice = /Mobi|Android|iPhone|iPod|iPad|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-const isOnMobilePage = window.location.pathname.includes('mobile.html');
-
-if (isMobileDevice && !isOnMobilePage) {
-    window.location.replace('mobile.html');
-}
-
-
 console.log("Script loaded and running");
 
 const firebaseConfig = {
@@ -70,6 +59,16 @@ if (window.innerWidth > 768) {
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 } else {
     document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+}
+
+// Visitor messages are untrusted: always render them as text, never as HTML
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 // === SAFE LOCAL STORAGE
@@ -232,8 +231,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 li.innerHTML = `
           <div class="message-bubble">
-            <div class="message-name">${data.name}</div>
-            <div class="message-text">${data.message}</div>
+            <div class="message-name">${escapeHtml(data.name)}</div>
+            <div class="message-text">${escapeHtml(data.message)}</div>
             <div class="message-date">${timeStr}</div>
           </div>
         `;
@@ -256,8 +255,8 @@ window.addEventListener('DOMContentLoaded', () => {
                     const card = document.createElement('div');
                     card.className = 'depoiment-card';
                     card.innerHTML = `
-            <div class="message">${message}</div>
-            <div class="name">– ${name}</div>
+            <div class="message">${escapeHtml(message)}</div>
+            <div class="name">– ${escapeHtml(name)}</div>
           `;
                     grid.appendChild(card);
                 });
